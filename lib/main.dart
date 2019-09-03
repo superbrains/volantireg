@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               
               padding:
               
-                  EdgeInsets.only(bottom: 20, left: 50, right: 50, top: 20),
+                  EdgeInsets.only(bottom: 20, left: MediaQuery.of(context).size.width/8, right: MediaQuery.of(context).size.width/8, top: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -110,7 +110,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: MediaQuery.of(context).size.height/35,
                     fontWeight: FontWeight.bold
                   ),),
-                  SizedBox(height: 40,),
+
+                  
+                  SizedBox(height: MediaQuery.of(context).size.height/20,),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,7 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           }, context)
                     ],
                   ),
-                  SizedBox(height: 20.0,),
+
+                  
+                  SizedBox(height: MediaQuery.of(context).size.height/40,),
                    Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -153,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           }, context)
                     ],
                   ),
-                  SizedBox(height: 20,),
+                   SizedBox(height: MediaQuery.of(context).size.height/40,),
                   ListView(
                     shrinkWrap: true,
                     children: <Widget>[
@@ -165,9 +169,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold
                       ),)
                     ],),
-                    SizedBox(height: 10,),
+                     SizedBox(height: MediaQuery.of(context).size.height/80,),
                     Text('IT and Data Management, Reservoir Engineering, Economic Evaluation, Production Engineering, Seismic Data Processing, Production Optimization, Asset Determination and Management, etc..', style: TextStyle(color: Colors.grey),),
-                  SizedBox(height: 20,),
+                   SizedBox(height: MediaQuery.of(context).size.height/40,),
                    Row(children: <Widget>[
                       Icon(Icons.contacts),
                       SizedBox(width: 5,),
@@ -176,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold
                       ),)
                     ],),
-                    SizedBox(height: 10,),
+                      SizedBox(height: MediaQuery.of(context).size.height/80,),
                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                      children: <Widget>[

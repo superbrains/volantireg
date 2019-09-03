@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:naragireg/models/visitors.dart';
+import 'package:path/path.dart' as p;
 
 class DatabaseHelper {
   static DatabaseHelper _databaseHelper;
@@ -36,12 +37,25 @@ class DatabaseHelper {
     return _database;
   }
 
-  Future<Database> initializeDatabase() async {
+  Future<Database> initializeDatabase2() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + 'visitorsdbase.db';
     var visitorsDatabase =
         await openDatabase(path, version: 1, onCreate: _createDb);
     return visitorsDatabase;
+  }
+
+  Future<Database> initializeDatabase() async {
+    //Get path of the directory for android and iOS.
+
+    var databasesPath = await getDatabasesPath();
+    String path = p.join(databasesPath, 'visitorsdbase.db');
+
+    //open/create database at a given path
+    var cardDatabase = await openDatabase(path, version: 1, onCreate: _createDb);
+
+    return cardDatabase;
+
   }
 
   void _createDb(Database db, int newversion) async {
