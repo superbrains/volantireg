@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:naragireg/models/visitors.dart';
 import 'package:naragireg/utils/database_helper.dart';
 import 'screens/todayslist.dart';
-import 'package:intl/intl.dart';
+
 import 'screens/visitorslist.dart';
 
 
@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     setState(() {
-     updateListview();
+    // updateListview();
     });
   }
 

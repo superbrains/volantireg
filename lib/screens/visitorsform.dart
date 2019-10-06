@@ -268,11 +268,11 @@ class _Visitors extends State<Visitors> {
       result = await helper.insertVisitor(visitors);
     }
 
-    if (result != 0) {
+   /* if (result != 0) {
       _showAlertDialog('Status', 'Visitor Saved Successfully');
     } else {
       _showAlertDialog('Status', 'Problem Saving Data');
-    }
+    }*/
   }
 
   void _showAlertDialog(String title, String message) {

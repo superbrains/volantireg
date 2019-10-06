@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';
@@ -8,7 +9,7 @@ import 'package:path/path.dart' as p;
 class DatabaseHelper {
   static DatabaseHelper _databaseHelper;
   static Database _database;
-  String visitorsTable = 'tblVisitors';
+  String visitorsTable = 'tblvisitors';
   String colId = "id";
   String colname = "name";
   String colPhone = "phonenumber";
@@ -45,8 +46,9 @@ class DatabaseHelper {
     return visitorsDatabase;
   }
 
-  Future<Database> initializeDatabase() async {
+  Future<Database> initializeDatabase3() async {
     //Get path of the directory for android and iOS.
+
 
     var databasesPath = await getDatabasesPath();
     String path = p.join(databasesPath, 'visitorsdbase.db');
@@ -57,6 +59,32 @@ class DatabaseHelper {
     return cardDatabase;
 
   }
+
+    Future<Database> initializeDatabase() async {
+    //Get path of the directory for android and iOS.
+
+    // Construct the path to the app's writable database file:
+    var dbDir = await getDatabasesPath();
+    print("Directory is $dbDir");
+    var dbPath = p.join(dbDir, "dbase.db");
+    
+    if(FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound){
+            ByteData data = await rootBundle.load("assets/visitors.db");
+            List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+          await File(dbPath).writeAsBytes(bytes);
+
+    }
+// Delete any existing database:
+   // await deleteDatabase(dbPath);
+
+// Create the writable database file from the bundled demo database file:
+
+    var db = await openDatabase(dbPath);
+     print("Path is $dbPath");
+    return db;
+
+  }
+
 
   void _createDb(Database db, int newversion) async {
     await db.execute(

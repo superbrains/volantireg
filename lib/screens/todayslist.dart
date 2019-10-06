@@ -167,7 +167,7 @@ class _TodayVisitors extends State<TodayVisitors> {
                                   ),
                                   SizedBox(width: 10,),
                                   Text(
-                                     this.filteredvisitorsList[index].timein,
+                                    this.filteredvisitorsList[index].datein +' '+ this.filteredvisitorsList[index].timein,
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontFamily: 'Monseratti',

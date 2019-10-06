@@ -10,6 +10,20 @@ class Signing extends StatefulWidget {
 class _Signing extends State<Signing> {
   List<Offset> _points = <Offset>[];
 
+/*if (result != 0) {
+      _showAlertDialog('Status', 'Visitor Saved Successfully');
+    } else {
+      _showAlertDialog('Status', 'Problem Saving Data');
+    }
+  }*/
+
+  void _showAlertDialog(String title, String message) {
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+    );
+    showDialog(context: context, builder: (_) => alertDialog);
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -49,7 +63,7 @@ class _Signing extends State<Signing> {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: (){
-                          
+                             _showAlertDialog('Status', 'Visitor Saved Successfully');
                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
                             return MyHomePage();
                             }));
