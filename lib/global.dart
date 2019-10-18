@@ -5,3 +5,4 @@ String tagNo;
 String purpose;
 String date;
 String address;
+String value;

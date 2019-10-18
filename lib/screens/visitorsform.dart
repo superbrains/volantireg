@@ -201,7 +201,7 @@ class _Visitors extends State<Visitors> {
                   ),
                   SizedBox(height: 40.0),
                   Container(
-                    height: 40.0,
+                    height: 60.0,
                     child: Material(
                         borderRadius: BorderRadius.circular(20.0),
                         shadowColor: Colors.orange,
@@ -217,7 +217,7 @@ class _Visitors extends State<Visitors> {
                           },
                           child: Center(
                             child: Text(
-                              'CLICK TO SIGN',
+                              'CLICK TO APPEND SIGNATURE',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -266,9 +266,11 @@ class _Visitors extends State<Visitors> {
 
     if (visitors.id != null) {
       //update
+        global.value ='2';
       result = await helper.updateVisitor(visitors);
     } else {
       //save
+      global.value ='1';
       result = await helper.insertVisitor(visitors);
     }
 

@@ -152,7 +152,7 @@ class _Signout extends State<Signout> {
                  
                   SizedBox(height: 60.0),
                   Container(
-                    height: 40.0,
+                    height: 60.0,
                     child: Material(
                         borderRadius: BorderRadius.circular(20.0),
                         shadowColor: Colors.orange,
@@ -226,9 +226,11 @@ class _Signout extends State<Signout> {
 
     if (visitors.id != null) {
       //update
+      global.value='2';
       result = await helper.updateVisitor(visitors);
     } else {
       //save
+       global.value='1';
       result = await helper.insertVisitor(visitors);
     }
 

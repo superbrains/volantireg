@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:naragireg/models/visitors.dart';
 import 'package:naragireg/utils/database_helper.dart';
 import 'screens/todayslist.dart';
-
+import 'global.dart' as global;
 import 'screens/visitorslist.dart';
 
 
@@ -46,9 +46,28 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    if(global.value=='1'){
+       WidgetsBinding.instance
+        .addPostFrameCallback((_) => _showsnackbar('Welcome to Narag Energy!'));
+    }else if(global.value=='2'){
+       WidgetsBinding.instance
+        .addPostFrameCallback((_) => _showsnackbar('Thank You for visiting. Have a nice day!'));
+    }
+   
     setState(() {
     // updateListview();
     });
+  }
+
+  final GlobalKey<ScaffoldState> scaffoldstate = new GlobalKey<ScaffoldState>();
+
+  void _showsnackbar(String value){
+    global.value='0';
+    scaffoldstate.currentState.showSnackBar(new SnackBar(
+      
+      content: new Text(value)
+      
+      ,));
   }
 
   @override
@@ -118,6 +137,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       _buildCard('New Visitor', 'assets/newVisitor.png', () {
+                        global.id=null;
+                        global.address='';
+                        global.name='';
+                        global.phoneNo='';
+
+
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return Visitors(VisitorsObj('', '', '', '', '', '',''));
@@ -199,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         )));
         
-        
+    
   }
 
   void updateListview() {
