@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'signature.dart';
+import 'package:naragireg/global.dart' as global;
 import 'dart:async';
+import 'signoutform.dart';
 
 import 'package:naragireg/models/visitors.dart';
 import 'package:naragireg/utils/database_helper.dart';
@@ -64,9 +65,9 @@ class _TodayVisitors extends State<TodayVisitors> {
     setState(() {
       newList = visitorsList
                           .where((u) =>
-                              (u.datein.toLowerCase().contains(DateFormat.yMMMd().format(DateTime.now()).toLowerCase())||
-                               (u.timein.toLowerCase().contains(DateFormat.yMMMd().format(DateTime.now()).toLowerCase())
-                          )))
+                              ((u.datein.toLowerCase().contains(DateFormat.yMMMd().format(DateTime.now()).toLowerCase())||
+                               (u.timein.toLowerCase().contains(DateFormat.yMMMd().format(DateTime.now()).toLowerCase())) &&
+                           (u.dateout.contains('')))))
                           .toList();
       filteredvisitorsList = newList;
     });
@@ -132,9 +133,17 @@ class _TodayVisitors extends State<TodayVisitors> {
                       borderRadius: BorderRadius.circular(10.0),
                       onTap: () {
                         setState(() {
-                          /*Navigator.push(context, MaterialPageRoute(builder: (context){
-                          return  Sections('States', filteredstates[index].toString());
-                        }));*/
+                          global.name=  this.filteredvisitorsList[index].name;
+                          global.id=  this.filteredvisitorsList[index].id;
+                          global.phoneNo=  this.filteredvisitorsList[index].phonenumber;
+                          global.tagNo=  this.filteredvisitorsList[index].tagno;
+                          global.address=  this.filteredvisitorsList[index].address;
+                          global.purpose=  this.filteredvisitorsList[index].purpose;
+                          global.date=  this.filteredvisitorsList[index].datein;
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return  Signout();
+                        }));
                         });
                       },
                       child: Card(

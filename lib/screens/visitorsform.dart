@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'signature.dart';
 import 'dart:async';
-
+import 'package:naragireg/global.dart' as global;
 import 'package:naragireg/models/visitors.dart';
 import 'package:naragireg/utils/database_helper.dart';
 
@@ -56,6 +56,10 @@ class _Visitors extends State<Visitors> {
 
   @override
   Widget build(BuildContext context) {
+     phoneController.text =global.phoneNo;
+      nameController.text = global.name;
+     addressController.text = global.address;
+ 
     return Scaffold(
         appBar: new AppBar(
           iconTheme: new IconThemeData(color: Colors.white),
@@ -254,7 +258,7 @@ class _Visitors extends State<Visitors> {
     int result;
 
     //print(new DateFormat("H:m:s").format(now)); // => 14:40:25
-
+    visitors.id = global.id;
     visitors.timein = new DateFormat("H:m:s").format(DateTime.now());
     visitors.datein = DateFormat.yMMMd().format(DateTime.now());
     visitors.timeout='';

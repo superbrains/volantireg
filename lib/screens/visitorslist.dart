@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'signature.dart';
 import 'dart:async';
-
+import 'package:naragireg/global.dart' as global;
 import 'package:naragireg/models/visitors.dart';
 import 'package:naragireg/utils/database_helper.dart';
+import 'visitorsform.dart';
 
 class VisitorsList extends StatefulWidget {
   final List<VisitorsObj> visitorsList;
@@ -27,6 +28,8 @@ class _VisitorsList extends State<VisitorsList> {
   List<VisitorsObj> filteredvisitorsList;
   _VisitorsList(this.visitorsList);
 
+  VisitorsObj visitmod;
+
   DatabaseHelper helper = DatabaseHelper();
 
   TextEditingController phoneController = TextEditingController();
@@ -34,6 +37,7 @@ class _VisitorsList extends State<VisitorsList> {
   TextEditingController addressController = TextEditingController();
   TextEditingController purposeController = TextEditingController();
   TextEditingController tagController = TextEditingController();
+
 
 /*Future<bool> loader(){
   return showDialog(context: context,
@@ -127,9 +131,16 @@ class _VisitorsList extends State<VisitorsList> {
                       borderRadius: BorderRadius.circular(10.0),
                       onTap: () {
                         setState(() {
-                          /*Navigator.push(context, MaterialPageRoute(builder: (context){
-                          return  Sections('States', filteredstates[index].toString());
-                        }));*/
+                          global.name=  this.filteredvisitorsList[index].name;
+                         
+                          global.phoneNo=  this.filteredvisitorsList[index].phonenumber;
+                        
+                          global.address=  this.filteredvisitorsList[index].address;
+                        
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            
+                          return  Visitors(visitmod);
+                        }));
                         });
                       },
                       child: Card(

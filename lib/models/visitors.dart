@@ -29,6 +29,10 @@ class VisitorsObj {
    String get dateout => _dateout;
   String get timeout => _timeout;
 
+  set id(int newid) {
+    this._id = newid;
+  }
+  
   set name(String newName) {
     this._name = newName;
   }
