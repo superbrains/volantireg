@@ -23,6 +23,7 @@ dependencies:
   path_provider: any
   intl: ^0.15.7
   responsive_container: ^0.0.1
+  http: ^0.12.0+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

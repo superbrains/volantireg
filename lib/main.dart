@@ -195,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),)
                     ],),
                      SizedBox(height: MediaQuery.of(context).size.height/80,),
-                    Text('IT and Data Management, Reservoir Engineering, Economic Evaluation, Production Engineering, Seismic Data Processing, Production Optimization, Asset Determination and Management, etc..', style: TextStyle(color: Colors.grey),),
+                    Text('Asset Evaluation, Production & Facility Engineering, Investment and Divestment Consulting, IT Support and Data Management, Seismic Data Processing, Audit and Prequalification Services, Training and Manpower Development...', style: TextStyle(color: Colors.grey),),
                    SizedBox(height: MediaQuery.of(context).size.height/40,),
                    Row(children: <Widget>[
                       Icon(Icons.contacts),

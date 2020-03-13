@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:naragireg/global.dart' as global;
 import 'package:naragireg/models/visitors.dart';
 import 'package:naragireg/utils/database_helper.dart';
+import 'package:naragireg/services/visitorsServ.dart' as Service;
+import 'package:naragireg/classes/VisitorsClass.dart';
 
 class Visitors extends StatefulWidget {
   final VisitorsObj visitors;
@@ -227,6 +229,32 @@ class _Visitors extends State<Visitors> {
                         )),
                   ),
                   SizedBox(height: 20.0),
+                   Container(
+                    height: 60.0,
+                    child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        shadowColor: Colors.orange,
+                        color: Colors.deepOrange,
+                        elevation: 7.0,
+                        child: GestureDetector(
+                          onTap: () {
+                          
+                            Navigator.pop(context,
+                                MaterialPageRoute(builder: (context) {
+                            
+                            }));
+                          },
+                          child: Center(
+                            child: Text(
+                              '<<<BACK',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'MontSerrat'),
+                            ),
+                          ),
+                        )),
+                  ),
                 ],
               ),
             )
@@ -272,6 +300,10 @@ class _Visitors extends State<Visitors> {
       //save
       global.value ='1';
       result = await helper.insertVisitor(visitors);
+      String response;
+
+      response = await Service.Services.saveVisitor(visitors.name, visitors.phonenumber, visitors.address, visitors.purpose, visitors.tagno, DateTime.now(), DateTime.now());
+      
     }
 
    /* if (result != 0) {
