@@ -6,7 +6,7 @@ import 'package:naragireg/global.dart' as global;
 import 'package:naragireg/models/visitors.dart';
 import 'package:naragireg/utils/database_helper.dart';
 import 'package:naragireg/services/visitorsServ.dart' as Service;
-import 'package:naragireg/classes/VisitorsClass.dart';
+import 'package:naragireg/services/serv.dart' as Serv;
 
 class Visitors extends StatefulWidget {
   final VisitorsObj visitors;
@@ -18,6 +18,9 @@ class Visitors extends StatefulWidget {
 
 //Activation
 class _Visitors extends State<Visitors> {
+
+   final _formKey = GlobalKey<FormState>();
+
   String phone;
   String mac;
   String phoneAct;
@@ -93,170 +96,211 @@ class _Visitors extends State<Visitors> {
             SizedBox(
               height: 10,
             ),
-            Container(
-              padding: EdgeInsets.only(top: 35.00, left: 20.0, right: 20.0),
-              child: Column(
-                children: <Widget>[
-                  Material(
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: TextField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Colors.deepOrange,
-                            size: 30.0,
-                          ),
-                          contentPadding: EdgeInsets.only(
-                              left: 15.0, right: 15.0, top: 15.0),
-                          hintText: 'NAME'),
-                      onChanged: (value) {
-                        updateName();
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Material(
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: TextField(
-                      controller: phoneController,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.phone,
-                            color: Colors.deepOrange,
-                            size: 30.0,
-                          ),
-                          contentPadding: EdgeInsets.only(
-                              left: 15.0, right: 15.0, top: 15.0),
-                          hintText: 'PHONE NUMBER'),
-                      onChanged: (value) {
-                        updatePhone();
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Material(
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: TextField(
-                      controller: addressController,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.location_city,
-                            color: Colors.deepOrange,
-                            size: 30.0,
-                          ),
-                          contentPadding: EdgeInsets.only(
-                              left: 15.0, right: 15.0, top: 15.0),
-                          hintText: 'ADDRESS'),
-                      onChanged: (value) {
-                        updateAddress();
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Material(
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: TextField(
-                      controller: purposeController,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.note,
-                            color: Colors.deepOrange,
-                            size: 30.0,
-                          ),
-                          contentPadding: EdgeInsets.only(
-                              left: 15.0, right: 15.0, top: 15.0),
-                          hintText: 'PURPOSE OF VISIT'),
-                      onChanged: (value) {
-                        updatePurpose();
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Material(
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: TextField(
-                      controller: tagController,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.tag_faces,
-                            color: Colors.deepOrange,
-                            size: 30.0,
-                          ),
-                          contentPadding: EdgeInsets.only(
-                              left: 15.0, right: 15.0, top: 15.0),
-                          hintText: 'TAG NO'),
-                      onChanged: (value) {
-                        updateTagno();
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 40.0),
-                  Container(
-                    height: 60.0,
-                    child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.orange,
-                        color: Colors.deepOrange,
-                        elevation: 7.0,
-                        child: GestureDetector(
-                          onTap: () {
-                            _save();
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Signing();
-                            }));
+            Form(
+              key: _formKey,
+              child: 
+                Container(
+                  padding: EdgeInsets.only(top: 35.00, left: 20.0, right: 20.0),
+                  child: Column(
+                    children: <Widget>[
+                      Material(
+                        elevation: 3.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: TextFormField(
+                            validator: (value) {
+                            if (value.isEmpty) {
+                            return 'Please enter a name!';
+                            }
+                            return null;
+                            },
+                          controller: nameController,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: Icon(
+                                Icons.person,
+                                color: Colors.deepOrange,
+                                size: 30.0,
+                              ),
+                              contentPadding: EdgeInsets.only(
+                                  left: 15.0, right: 15.0, top: 15.0),
+                              hintText: 'NAME'),
+                          onChanged: (value) {
+                            updateName();
                           },
-                          child: Center(
-                            child: Text(
-                              'CLICK TO APPEND SIGNATURE',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'MontSerrat'),
-                            ),
-                          ),
-                        )),
-                  ),
-                  SizedBox(height: 20.0),
-                   Container(
-                    height: 60.0,
-                    child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.orange,
-                        color: Colors.deepOrange,
-                        elevation: 7.0,
-                        child: GestureDetector(
-                          onTap: () {
-                          
-                            Navigator.pop(context,
-                                MaterialPageRoute(builder: (context) {
-                            
-                            }));
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      Material(
+                        elevation: 3.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: TextFormField(
+                                                      validator: (value) {
+                            if (value.isEmpty || !isNumeric(value) ) {
+                            return 'Please enter valid phone number!';
+                            }
+                            return null;
+                            },
+
+                          controller: phoneController,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: Icon(
+                                Icons.phone,
+                                color: Colors.deepOrange,
+                                size: 30.0,
+                              ),
+                              contentPadding: EdgeInsets.only(
+                                  left: 15.0, right: 15.0, top: 15.0),
+                              hintText: 'PHONE NUMBER'),
+                          onChanged: (value) {
+                            updatePhone();
                           },
-                          child: Center(
-                            child: Text(
-                              '<<<BACK',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'MontSerrat'),
-                            ),
-                          ),
-                        )),
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      Material(
+                        elevation: 3.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: TextFormField(
+                                                      validator: (value) {
+                            if (value.isEmpty) {
+                            return 'Please enter an address!';
+                            }
+                            return null;
+                            },
+
+                          controller: addressController,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: Icon(
+                                Icons.location_city,
+                                color: Colors.deepOrange,
+                                size: 30.0,
+                              ),
+                              contentPadding: EdgeInsets.only(
+                                  left: 15.0, right: 15.0, top: 15.0),
+                              hintText: 'COMPANY and ADDRESS'),
+                          onChanged: (value) {
+                            updateAddress();
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      Material(
+                        elevation: 3.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: TextFormField(
+                                                      validator: (value) {
+                            if (value.isEmpty) {
+                            return 'Please enter purpose of visit!';
+                            }
+                            return null;
+                            },
+
+                          controller: purposeController,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: Icon(
+                                Icons.note,
+                                color: Colors.deepOrange,
+                                size: 30.0,
+                              ),
+                              contentPadding: EdgeInsets.only(
+                                  left: 15.0, right: 15.0, top: 15.0),
+                              hintText: 'PURPOSE OF VISIT'),
+                          onChanged: (value) {
+                            updatePurpose();
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      Material(
+                        elevation: 3.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: TextFormField(
+                                                      validator: (value) {
+                            if (value.isEmpty || !isNumeric(value)) {
+                            return 'Please enter a valid tag number!';
+                            }
+                            return null;
+                            },
+
+                          controller: tagController,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: Icon(
+                                Icons.tag_faces,
+                                color: Colors.deepOrange,
+                                size: 30.0,
+                              ),
+                              contentPadding: EdgeInsets.only(
+                                  left: 15.0, right: 15.0, top: 15.0),
+                              hintText: 'TAG NO'),
+                          onChanged: (value) {
+                            updateTagno();
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 40.0),
+                       GestureDetector(
+                   onTap: (){
+
+                      if (_formKey.currentState.validate()) {
+                           // _save();
+                           global.value="sign in";
+                            global.purpose =purposeController.text;
+                             global.tagNo =tagController.text;
+                             
+                                 Navigator.push(context, MaterialPageRoute(builder: (context){
+                                   return Signing();
+                                  }));
+
+
+
+                   // Scaffold
+                 // .of(context)
+                 // .showSnackBar(SnackBar(content: Text('Processing Data')));
+                    }
+                               
+                                },
+                  child: Container(
+                    height: 60,
+                    width:6000,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(20.0),
+                              shadowColor: Colors.orange,
+                              color: Colors.deepOrange,
+                              elevation: 7.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                        Text('CLICK TO APPEND SIGNATURE', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                      ],)),) ,),
+                      SizedBox(height: 20.0),
+                       GestureDetector(
+                   onTap: (){
+                                
+                                 Navigator.pop(context, MaterialPageRoute(builder: (context){
+                                 
+                                  }));
+                                },
+                  child: Container(
+                    height: 60,
+                    width:6000,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(20.0),
+                              shadowColor: Colors.orange,
+                              color: Colors.deepOrange,
+                              elevation: 7.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                        Text('<<BACK', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                      ],)),) ,),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              
             )
           ],
         ));
@@ -264,47 +308,81 @@ class _Visitors extends State<Visitors> {
 
   void updateName() {
     visitors.name = nameController.text;
+    global.name = nameController.text;
   }
 
   void updatePhone() {
     visitors.phonenumber = phoneController.text;
+    global.phoneNo = phoneController.text;
   }
 
   void updateAddress() {
     visitors.address = addressController.text;
+     global.address = addressController.text;
   }
+
+bool isNumeric(String s) {
+  if(s == null) {
+    return false;
+  }
+
+ try{
+  double.parse(s);
+  return true;
+ }catch(s){
+   return false;
+ }
+
+ 
+}
 
   void updatePurpose() {
     visitors.purpose = purposeController.text;
+    global.purpose =purposeController.text;
   }
 
   void updateTagno() {
     visitors.tagno = tagController.text;
+    global.tagNo =tagController.text;
   }
 
   void _save() async {
     int result;
 
     //print(new DateFormat("H:m:s").format(now)); // => 14:40:25
-    visitors.id = global.id;
-    visitors.timein = new DateFormat("H:m:s").format(DateTime.now());
-    visitors.datein = DateFormat.yMMMd().format(DateTime.now());
-    visitors.timeout='';
-    visitors.dateout='';
+     VisitorsObj vis= VisitorsObj(nameController.text, phoneController.text , addressController.text,purposeController.text,tagController.text, DateFormat.yMMMd().format(DateTime.now()),new DateFormat("H:m:s").format(DateTime.now()));
 
-    if (visitors.id != null) {
-      //update
-        global.value ='2';
-      result = await helper.updateVisitor(visitors);
-    } else {
-      //save
+     /* vis.name = nameController.text;
+       vis.phonenumber = phoneController.text;
+      vis.address = addressController.text;
+      vis.purpose = purposeController.text;
+    vis.tagno = tagController.text;
+    vis.id = global.id;
+    vis.timein = new DateFormat("H:m:s").format(DateTime.now());
+    vis.datein = DateFormat.yMMMd().format(DateTime.now());
+    vis.timeout='';
+    vis.dateout='';*/
+
+ //save
       global.value ='1';
-      result = await helper.insertVisitor(visitors);
+      result = await helper.insertVisitor(vis);
       String response;
 
-      response = await Service.Services.saveVisitor(visitors.name, visitors.phonenumber, visitors.address, visitors.purpose, visitors.tagno, DateTime.now(), DateTime.now());
+      response = await Service.Services.saveVisitor(vis.name, vis.phonenumber, vis.address, vis.purpose, vis.tagno, DateTime.now(), DateTime.now());
       
-    }
+  //  if (visitors.id != null) {
+      //update
+   //     global.value ='2';
+   //   result = await helper.updateVisitor(visitors);
+   // } else {
+      //save
+   //   global.value ='1';
+    //  result = await helper.insertVisitor(visitors);
+    //  String response;
+
+     // response = await Service.Services.saveVisitor(visitors.name, visitors.phonenumber, visitors.address, visitors.purpose, visitors.tagno, DateTime.now(), DateTime.now());
+      
+    //}
 
    /* if (result != 0) {
       _showAlertDialog('Status', 'Visitor Saved Successfully');
@@ -320,4 +398,5 @@ class _Visitors extends State<Visitors> {
     );
     showDialog(context: context, builder: (_) => alertDialog);
   }
+
 }

@@ -94,7 +94,28 @@ class _TodayVisitors extends State<TodayVisitors> {
         ),
          body: Column(
           children: <Widget>[
-           
+            SizedBox(height:20),
+            GestureDetector(
+               onTap: (){
+                            
+                             Navigator.pop(context, MaterialPageRoute(builder: (context){
+                            
+                              }));
+                            },
+              child: Container(
+                height: 60,
+                width:6000,
+                child: Material(
+                  borderRadius: BorderRadius.circular(20.0),
+                          shadowColor: Colors.orange,
+                          color: Colors.deepOrange,
+                          elevation: 7.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    Text('<<BACK', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                  ],)),) ,),
+                  SizedBox(height:20),
             Column(
               children: <Widget>[
                 TextField(
@@ -128,7 +149,10 @@ class _TodayVisitors extends State<TodayVisitors> {
                   padding: EdgeInsets.all(10.0),
                   itemCount: filteredvisitorsList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
+
+                   if(filteredvisitorsList[index].dateout ==null ){
+
+                      return InkWell(
                       splashColor: Colors.redAccent,
                       borderRadius: BorderRadius.circular(10.0),
                       onTap: () {
@@ -140,7 +164,7 @@ class _TodayVisitors extends State<TodayVisitors> {
                           global.address=  this.filteredvisitorsList[index].address;
                           global.purpose=  this.filteredvisitorsList[index].purpose;
                           global.date=  this.filteredvisitorsList[index].datein;
-
+                          global.timein =  this.filteredvisitorsList[index].timein;
                           Navigator.push(context, MaterialPageRoute(builder: (context){
                           return  Signout();
                         }));
@@ -182,7 +206,8 @@ class _TodayVisitors extends State<TodayVisitors> {
                                         fontFamily: 'Monseratti',
                                         color: Colors.grey),
                                   ),
-                                  SizedBox(width: 20,),
+                                  SizedBox(width:20),
+                                                                   SizedBox(width: 20,),
                                    Text(
                                      'TAG NO:',
                                     style: TextStyle(
@@ -199,7 +224,15 @@ class _TodayVisitors extends State<TodayVisitors> {
                                         fontFamily: 'Monseratti',
                                         color: Colors.grey),
                                   ),
-                                  Icon(Icons.forward)
+                                                            SizedBox(width: 20,),
+                                   Text(
+                                     'Please tap to sign out',
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: 'Monseratti',
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ],
                               ),
                             ],
@@ -207,10 +240,100 @@ class _TodayVisitors extends State<TodayVisitors> {
                         ),
                       ),
                     );
+                      
+                    }else{
+                      return InkWell(
+                      splashColor: Colors.redAccent,
+                      borderRadius: BorderRadius.circular(10.0),
+                      onTap: () {
+                      
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                this.filteredvisitorsList[index].name,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontFamily: 'Monseratti',
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                               
+                                children: <Widget>[
+                                  Text(
+                                     'TIME IN:',
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: 'Monseratti',
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(width: 10,),
+                                  Text(
+                                    this.filteredvisitorsList[index].datein +' '+ this.filteredvisitorsList[index].timein,
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: 'Monseratti',
+                                        color: Colors.grey),
+                                  ),
+                                   SizedBox(width: 20,),
+                                   Text(
+                                     'TIME OUT:',
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: 'Monseratti',
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                    SizedBox(width: 10,),
+                                  Text(
+                                    this.filteredvisitorsList[index].dateout +' '+ this.filteredvisitorsList[index].timeout,
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: 'Monseratti',
+                                        color: Colors.grey),
+                                  ),
+                                    SizedBox(width: 20,),
+                                   Text(
+                                     'TAG NO:',
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: 'Monseratti',
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(width: 10,),
+                                  Text(
+                                    this.filteredvisitorsList[index].tagno,
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: 'Monseratti',
+                                        color: Colors.grey),
+                                  ),
+                                  Icon(Icons.forward),
+                                  Text('Signed Out', style:TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.grey),)
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                    }
+                    
                   }),
             )
           ],
         ));
+       
   }
 
  

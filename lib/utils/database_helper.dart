@@ -99,6 +99,14 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> getVisitorsMapListDistinc() async {
+    Database db = await this.database;
+    var result =
+        await db.rawQuery('SELECT * FROM $visitorsTable order by $colId DESC');
+    //var result = await db.query(visitorsTable, orderBy: '$colId DESC' );
+    return result;
+  }
+
   Future<List<Map<String, dynamic>>> getTodayVisitorsMapList(String str) async {
     Database db = await this.database;
    // var result =        await db.rawQuery('SELECT * FROM $visitorsTable order by $colId DESC');
@@ -115,10 +123,13 @@ class DatabaseHelper {
 
   Future<int> updateVisitor(VisitorsObj visitors) async {
     Database db = await this.database;
+
+    // result =await db.rawQuery('SELECT * FROM $visitorsTable order by $colId DESC');
     var result = await db.update(visitorsTable, visitors.toMap(),
         where: '$colId = ?', whereArgs: [visitors.id]);
 
     return result;
+    
   }
 
   Future<int> deleteVisitor(int id) async {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'signature.dart';
 import 'dart:async';
 import 'package:naragireg/global.dart' as global;
 import 'package:naragireg/models/visitors.dart';
@@ -66,8 +65,26 @@ class _VisitorsList extends State<VisitorsList> {
     
     super.initState();
     setState(() {
+      filteredvisitorsList =visitorsList;
+      int cnt = visitorsList.length -1;
+
+
+       while(cnt >=0) { 
+
+          VisitorsObj vis= VisitorsObj(visitorsList[cnt].name, visitorsList[cnt].phonenumber , visitorsList[cnt].address,visitorsList[cnt].purpose,visitorsList[cnt].tagno, DateFormat.yMMMd().format(DateTime.now()),new DateFormat("H:m:s").format(DateTime.now()));
+       
+          
+            var i = filteredvisitorsList.where((u)=> u.name.contains(vis.name)).toList();
+           if(i.length>1){
+               filteredvisitorsList.removeWhere((u)=> u.id== visitorsList[cnt].id);
+           }
+           
+         
+            cnt--; 
       
-      filteredvisitorsList = visitorsList;
+      
+   }
+
     });
   }
 
@@ -92,7 +109,29 @@ class _VisitorsList extends State<VisitorsList> {
         ),
          body: Column(
           children: <Widget>[
-           
+
+            SizedBox(height: 20,),
+              GestureDetector(
+               onTap: (){
+                            
+                             Navigator.pop(context, MaterialPageRoute(builder: (context){
+                             
+                              }));
+                            },
+              child: Container(
+                height: 60,
+                width:6000,
+                child: Material(
+                  borderRadius: BorderRadius.circular(20.0),
+                          shadowColor: Colors.orange,
+                          color: Colors.deepOrange,
+                          elevation: 7.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    Text('<<BACK', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                  ],)),) ,),
+                  SizedBox(height:20),
             Column(
               children: <Widget>[
                 TextField(
@@ -131,11 +170,16 @@ class _VisitorsList extends State<VisitorsList> {
                       borderRadius: BorderRadius.circular(10.0),
                       onTap: () {
                         setState(() {
+                           global.id =this.filteredvisitorsList[index].id;
                           global.name=  this.filteredvisitorsList[index].name;
                          
                           global.phoneNo=  this.filteredvisitorsList[index].phonenumber;
                         
                           global.address=  this.filteredvisitorsList[index].address;
+
+                         //  global.purpose=  this.filteredvisitorsList[index].purpose;
+
+                         //   global.tagNo=  this.filteredvisitorsList[index].tagno;
                         
                           Navigator.push(context, MaterialPageRoute(builder: (context){
                             

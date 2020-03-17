@@ -1,6 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:naragireg/main.dart';
+import 'package:naragireg/utils/database_helper.dart';
+import 'package:naragireg/services/visitorsServ.dart' as Service;
+import 'package:naragireg/global.dart' as global;
+import 'package:naragireg/models/visitors.dart';
+import 'package:intl/intl.dart';
 
 class Signing extends StatefulWidget {
   @override
@@ -9,7 +14,7 @@ class Signing extends StatefulWidget {
 
 class _Signing extends State<Signing> {
   List<Offset> _points = <Offset>[];
-
+ DatabaseHelper helper = DatabaseHelper();
 /*if (result != 0) {
       _showAlertDialog('Status', 'Visitor Saved Successfully');
     } else {
@@ -28,7 +33,9 @@ class _Signing extends State<Signing> {
   Widget build(BuildContext context) {
     return new Scaffold(
       
-      body: Container(
+      body: 
+      
+      Container(
         child: Column(children: <Widget>[
          
  new Container(
@@ -55,34 +62,47 @@ class _Signing extends State<Signing> {
           color: Colors.red
         ),),
          SizedBox(height: 10.0),
-                    Container(
-                      height: 60.0,
-                      child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
+                    GestureDetector(
+               onTap: (){
+                            _save();
+                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                               return MyHomePage();
+                              }));
+                            },
+              child: Container(
+                height: 60,
+                width:6000,
+                child: Material(
+                  borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.orange,
                           color: Colors.deepOrange,
                           elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: (){
-                               _showAlertDialog('Status', 'Visitor Saved Successfully');
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    Text('CLICK TO SAVE', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                  ],)),) ,),
+                     SizedBox(height: 20.0),
+                     GestureDetector(
+               onTap: (){
+                            
                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                              return MyHomePage();
+                               return MyHomePage();
                               }));
                             },
-                            child: Center(
-                              child: Text(
-                                'CLICK TO SAVE',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'MontSerrat'
-                                ),
-                              ),
-                            ),
-                          )
-                      ),
-
-                    ),
+              child: Container(
+                height: 60,
+                width:6000,
+                child: Material(
+                  borderRadius: BorderRadius.circular(20.0),
+                          shadowColor: Colors.orange,
+                          color: Colors.deepOrange,
+                          elevation: 7.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    Text('<<BACK', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                  ],)),) ,),
         ],),
       ),
       
@@ -93,6 +113,41 @@ class _Signing extends State<Signing> {
       ),
     );
   }
+
+   void _save() async {
+    int result;
+
+   if(global.value=='sign in'){
+      global.value='';
+      VisitorsObj vis= VisitorsObj(global.name, global.phoneNo, global.address,global.purpose,global.tagNo, DateFormat.yMMMd().format(DateTime.now()),new DateFormat("H:m:s").format(DateTime.now()));
+
+      global.value ='1';
+      result = await helper.insertVisitor(vis);
+      String response;
+
+      response = await Service.Services.saveVisitor(vis.name, vis.phonenumber, vis.address, vis.purpose, vis.tagno, DateTime.now(), DateTime.now());
+     
+   }else if(global.value=='sign out'){
+      global.value='';
+      VisitorsObj vis= VisitorsObj(global.name, global.phoneNo , global.address,global.purpose,global.tagNo,global.date, global.timein, DateFormat.yMMMd().format(DateTime.now()),new DateFormat("H:m:s").format(DateTime.now()));
+
+      vis.id= global.id;
+   
+
+      if (vis.id != null) {
+      //update
+      global.value='2';
+      result = await helper.updateVisitor(vis);
+    } else {
+      //save
+       global.value='1';
+      result = await helper.insertVisitor(vis);
+    }
+   }
+    
+ 
+  }
+
 }
 
 class Signature extends CustomPainter {

@@ -151,32 +151,49 @@ class _Signout extends State<Signout> {
                   ),
                  
                   SizedBox(height: 60.0),
-                  Container(
-                    height: 60.0,
-                    child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.orange,
-                        color: Colors.deepOrange,
-                        elevation: 7.0,
-                        child: GestureDetector(
-                          onTap: () {
-                            _save();
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Signing();
-                            }));
-                          },
-                          child: Center(
-                            child: Text(
-                              'CLICK TO SIGN OUT',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'MontSerrat'),
-                            ),
-                          ),
-                        )),
-                  ),
+                   GestureDetector(
+               onTap: (){
+                          //  _save();
+                          global.value='sign out';
+                             Navigator.push(context, MaterialPageRoute(builder: (context){
+                               return Signing();
+                              }));
+                            },
+              child: Container(
+                height: 60,
+                width:6000,
+                child: Material(
+                  borderRadius: BorderRadius.circular(20.0),
+                          shadowColor: Colors.orange,
+                          color: Colors.deepOrange,
+                          elevation: 7.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    Text('CLICK TO SIGN OUT', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                  ],)),) ,),
+
+                  SizedBox(height: 20,),
+                   GestureDetector(
+               onTap: (){
+                           
+                             Navigator.pop(context, MaterialPageRoute(builder: (context){
+                              
+                              }));
+                            },
+              child: Container(
+                height: 60,
+                width:6000,
+                child: Material(
+                  borderRadius: BorderRadius.circular(20.0),
+                          shadowColor: Colors.orange,
+                          color: Colors.deepOrange,
+                          elevation: 7.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    Text('<<BACK', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                  ],)),) ,),
                    SizedBox(
                   height: 40,
                   ),
@@ -217,21 +234,19 @@ class _Signout extends State<Signout> {
   void _save() async {
     int result;
 
-    
-    visitors.id= global.id;
-    visitors.timein ='';
-    visitors.datein = '';
-    visitors.timeout= new DateFormat("H:m:s").format(DateTime.now());
-    visitors.dateout=DateFormat.yMMMd().format(DateTime.now());
+         VisitorsObj vis= VisitorsObj(global.name, global.phoneNo , global.address,global.purpose,global.tagNo,global.date, global.timein, DateFormat.yMMMd().format(DateTime.now()),new DateFormat("H:m:s").format(DateTime.now()));
 
-    if (visitors.id != null) {
+    vis.id= global.id;
+   
+
+    if (vis.id != null) {
       //update
       global.value='2';
-      result = await helper.updateVisitor(visitors);
+      result = await helper.updateVisitor(vis);
     } else {
       //save
        global.value='1';
-      result = await helper.insertVisitor(visitors);
+      result = await helper.insertVisitor(vis);
     }
 
    /* if (result != 0) {

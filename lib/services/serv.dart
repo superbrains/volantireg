@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:naragireg/classes/VisitorsClass.dart';
 
-class Services{
+class Server{
 
   static const String url =   'https://naragenergy.com/ireg/api/visitors';
   static Future<String> saveVisitor(String name,String phoneNumber,String address,String purpose,String tagNo,DateTime dateAndTimeIn,DateTime dateAndTimeOut) async{
